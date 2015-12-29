@@ -1,4 +1,4 @@
-package euclid.algorithm
+package higher.order.function
 
 object sum {
 	def sumInts(a: Int, b: Int): Int =

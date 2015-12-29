@@ -1,4 +1,4 @@
-package euclid.algorithm
+package tail.recursion
 
 object factorial {
 	def factorial(n: Int): Int = {
