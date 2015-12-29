@@ -1,20 +1,17 @@
 package higher.order.function
 
 object sum {
-	def cube(x: Int) = x * x * x              //> cube: (x: Int)Int
 	
 	def factorial(n: Int): Int =
   	if(n == 0) 1 else n * factorial(n - 1)    //> factorial: (n: Int)Int
-  	
- 	def id(x: Int) = x                        //> id: (x: Int)Int
  	
  	def sum(f: Int => Int, a: Int, b: Int): Int =
  		if(a > b) 0 else f(a) + sum(f, a + 1, b)
                                                   //> sum: (f: Int => Int, a: Int, b: Int)Int
  		
-	def sumInts(a: Int, b: Int): Int = sum(id, a, b)
+	def sumInts(a: Int, b: Int): Int = sum(x => x, a, b)
                                                   //> sumInts: (a: Int, b: Int)Int
-	def sumCubes(a: Int, b: Int): Int = sum(cube, a, b)
+	def sumCubes(a: Int, b: Int): Int = sum(x => x * x * x, a, b)
                                                   //> sumCubes: (a: Int, b: Int)Int
 	def sumFactorial(a: Int, b: Int): Int = sum(factorial, a, b)
                                                   //> sumFactorial: (a: Int, b: Int)Int
