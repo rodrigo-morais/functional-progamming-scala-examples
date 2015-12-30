@@ -1,14 +1,15 @@
 package currying
 
 object generalize {
-  def generalize(f: Int => Int)(a: Int, b: Int, minor: Int): Int =
-  	if(a > b) minor
-  	else if(minor == 0) f(a) + generalize(f)(a + 1, b, minor)
-  	else f(a) * generalize(f)(a + 1, b, minor)//> generalize: (f: Int => Int)(a: Int, b: Int, minor: Int)Int
+  def mapReduce(f: Int => Int, combine: (Int, Int) => Int, zero: Int)(a: Int, b: Int): Int =
+  	if(a > b) zero
+  	else combine(f(a), mapReduce(f, combine, zero)(a + 1, b))
+                                                  //> mapReduce: (f: Int => Int, combine: (Int, Int) => Int, zero: Int)(a: Int, b:
+                                                  //|  Int)Int
   	
-  generalize(x => x)(1,5,0)                       //> res0: Int = 15
-  generalize(x => x)(2,3,0)                       //> res1: Int = 5
+  mapReduce(x => x, (x, y) => x * y, 1)(1,5)      //> res0: Int = 120
+  mapReduce(x => x, (x, y) => x * y, 1)(2,3)      //> res1: Int = 6
   
-  generalize(x => x)(1,5,1)                       //> res2: Int = 120
-  generalize(x => x)(2,3,1)                       //> res3: Int = 6
+  mapReduce(x => x, (x, y) => x + y, 0)(1,5)      //> res2: Int = 15
+  mapReduce(x => x, (x, y) => x + y, 0)(2,3)      //> res3: Int = 5
 }
