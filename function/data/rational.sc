@@ -6,9 +6,9 @@ object rational {
   
   t.add(s)                                        //> res0: function.data.RationalNum = 7/6
   
-  t.neg                                           //> res1: function.data.RationalNum = -1/2
+  t.neg                                           //> res1: function.data.RationalNum = 1/-2
   
-  t.sub(s)                                        //> res2: function.data.RationalNum = -1/6
+  t.sub(s)                                        //> res2: function.data.RationalNum = 1/-6
   
   
   val x = new RationalNum(1,3)                    //> x  : function.data.RationalNum = 1/3
@@ -16,11 +16,15 @@ object rational {
   val z = new RationalNum(3,2)                    //> z  : function.data.RationalNum = 3/2
   
   x.sub(y).sub(z)                                 //> res3: function.data.RationalNum = -79/42
+  y.add(y)                                        //> res4: function.data.RationalNum = 10/7
 }
 
 class RationalNum(x: Int, y: Int) {
-	def numer = x
-	def denom = y
+	private def gcd(x: Int, y: Int): Int =
+		if(y == 0) x else gcd(y, x % y)
+	
+	val numer = x / gcd(x, y)
+	val denom = y / gcd(x, y)
 	
 	def add(that: RationalNum) = {
 		val _numer = that.numer * denom + numer * that.denom
