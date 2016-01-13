@@ -1,7 +1,7 @@
 package List
 
 object ListInt {
-	trait List[T] {
+	trait List[+T] {
 		def head: T
 		def tail: List[T]
 		def isEmpty: Boolean
@@ -11,7 +11,7 @@ object ListInt {
 		def isEmpty = false
 	}
 	
-	class Nil[T] extends List[T] {
+	class Nil[T] extends List[Nothing] {
 		def isEmpty = true
 		def head = throw new NoSuchElementException("Nil.head")
 		def tail = throw new NoSuchElementException("Nil.tail")
