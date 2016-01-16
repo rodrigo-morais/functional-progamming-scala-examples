@@ -3,23 +3,23 @@ package List
 import scala._
 
 object genericSort {
-  def merge[T](xs: List[T], ys: List[T])(lt: (T,T) => Boolean): List[T] = (xs, ys) match {
+  def merge[T](xs: List[T], ys: List[T])(implicit lt: (T,T) => Boolean): List[T] = (xs, ys) match {
 	  case (List(), ys1) => ys1
 	  case (xs1, List()) => xs1
 	  case (x :: xs1, y :: ys1) =>
-	  	if(lt(x, y)) x :: merge(xs1, ys)(lt)
-	  	else y :: merge(xs, ys1)(lt)
-	}                                         //> merge: [T](xs: List[T], ys: List[T])(lt: (T, T) => Boolean)List[T]
+	  	if(lt(x, y)) x :: merge(xs1, ys)
+	  	else y :: merge(xs, ys1)
+	}                                         //> merge: [T](xs: List[T], ys: List[T])(implicit lt: (T, T) => Boolean)List[T]
 	
-	def sort[T](l: List[T])(lt: (T,T) => Boolean): List[T] = {
+	def sort[T](l: List[T])(implicit lt: (T,T) => Boolean): List[T] = {
 		val n = l.length/2
 		
 		if(n == 0) l
 		else {
 			val (frst, snd) = l splitAt n
-			merge(sort(frst)(lt),sort(snd)(lt))(lt)
+			merge(sort(frst),sort(snd))
 		}
-	}                                         //> sort: [T](l: List[T])(lt: (T, T) => Boolean)List[T]
+	}                                         //> sort: [T](l: List[T])(implicit lt: (T, T) => Boolean)List[T]
 	
 	val l1 = List(2,-4,1,2,5,3,7,6)           //> l1  : List[Int] = List(2, -4, 1, 2, 5, 3, 7, 6)
 	val l2 = List(-4,1,2,2,3,5,6,7)           //> l2  : List[Int] = List(-4, 1, 2, 2, 3, 5, 6, 7)
